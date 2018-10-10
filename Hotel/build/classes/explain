@@ -1,0 +1,143 @@
+框架设计
+一、	JAR包导入
+
+二、  数据库配置
+
+三、  框架页整理
+    1、主框架———-main.html
+    
+    2、左   页———-left.jsp
+      (1)页面映射控制器action/leftaction.do---LeftController
+      
+    3、右   页——--right.jsp
+    
+    4、顶   页——--top.jsp
+    
+四、  过滤器
+    1、身份认证登录——-LoginChack
+    
+    2、POST处理中文乱码过滤器——-CharacterEncoding
+    
+模块设计
+一、 客房管理
+   1、新建客房
+             实体类：
+         a: RoomStstic(客房状态)
+         b: Room(客房)
+         c: RoomType(客房类型)
+ 
+     (1) 新增客房类型
+        (Ⅰ)控制器: action/roomtypeaction.do?opt=add——--RoomTypeConytoller
+            a: int insters(RoomType type)----RoomtypeService
+            b: int insters(RoomType type)----IRoomTypeDao
+            c: RoomType findById(int id)----RoomtypeService
+            d: List<RoomType> findById(int id)----IRoomTypeDao
+         
+     (2) 新增客房
+         (Ⅰ)页面: roomadd.jsp
+         
+         (Ⅱ)页面控制器: action/roomaction.do?opt=addurl——--RoomController
+             a: List<RoomType> findAlls()----RoomtypeService
+             b: List<RoomType> findAll()----IRoomTypeDao
+             
+         (Ⅲ)数据处理控制器:action/roomaction.do?opt=add——--RoomController
+             a: int add(Room room)----RoomService
+             b: int inster(Room room)----IRoomDao
+         
+     (3) 列表客房类型
+         a: List<RoomType> findAlls()----RoomtypeService
+         b: List<RoomType> findAll()----IRoomTypeDao
+      
+     (4) 按编号查询客房类型
+         a: RoomType findById(int id)----RoomtypeService
+         b: List<RoomType> findById(int id)----IRoomTypeDao
+        
+   2、修改客房状态及入住人数
+       a: int Update(int roomNum,int roomstatic,int stateId)----IRoomDao
+       b: int Update(int roomNum,int roomstatic,int stateId)----RoomService
+       
+   3、修改客房信息
+      (2) 页面: roomadd.jsp
+         
+      (3) 页面控制器: action/roomaction.do?opt=editurl——--RoomController
+          a: List<RoomType> findAlls()----RoomtypeService
+          b: List<RoomType> findAll()----IRoomTypeDao
+            
+      (4) 先查询修改的数据
+          a: Room findById(int id)----RoomService
+          b: List<Room> findById(int id)----IRoomDao
+             
+      (5) 数据处理控制器: action/roomaction.do?opt=edit——--RoomController
+          a: int Update(String description,int roomtype,int roomId)----RoomService
+          b: int Update(String description,int roomtype,int roomId)----IRoomDao
+        
+       
+   4、列表客房信息
+      (1) 页面: roomlist.jsp
+      
+      (2) 控制器: action/roomaction.do?opt=list——--RoomController
+          a: List<Room> findAll(int currentPage,int pageSize)----RoomService
+          b: List<Room> findAll(int start,int pageSize)----IRoomDao
+          c: int count()----RoomService
+          d: int count()----IRoomDao
+       
+   5、按客房类型和状态查询
+       a: List<Room> findRoomType(int roomtype,int roomstatic)----RoomService
+       b: List<Room> findRoomType(int roomtype,int roomstatic)----IRoomDao
+       
+   6、按编号查询客房信息
+       a: Room findById(int id)----RoomService
+       b: List<Room> findById(int id)----IRoomDao 
+   
+   7、查询所有的房间
+      (1) 控制器: action/roomaction.do?opt=andALL——--RoomController
+          a: List<Room> findAndAll()----IRoomDao
+          b: List<Room> findAndAll()----RoomService   
+   
+二、 住宿管理
+   1、住宿登记
+      (1) 登记页面: register.jsp
+      
+      (2) 登记信息显示页面: guestlist.jsp
+          a: int regist(Guest guest)----GusetService
+          b: int insert(Guest guest)----IGuestDao
+          c: int Update(int roomNum,int roomstatic,int stateId)----IRoomDao
+      
+   2、住宿查询
+      a: List<Guest> findAnd(String name,int room,int start,int pageSize)----IGuestDao
+      b: List<Guest> findAnd(String name,int room,int currentPage,int pageSize)----GusetService
+      
+   3、退房管理
+     (1) 退房页面: guestback.jsp
+     
+     (2) 退房映射控制器: action/guestController?opt=backUrl——--GuestController
+     
+     (3) 退房查询: guestback.jsp
+         a: int update(String namresideDate,int toalMoney,int id)----IGuestDao
+         b: int back(Guest guest,Room room)----GusetService
+     
+     (4) 控制器: action/guestController?opt=checkuot——--GuestController
+         a: GuestVO findByRoom(String room)----GusetService
+         b: List<Guest> findByRoom(String room)----IGuestDao
+     
+   4、按住宿编号查询
+      a: Guest findId(int id)----GusetService
+      b: List<Guest> findId(int id)----IGuestDao
+
+三、 用户管理
+   1、身份认证
+     (1) 实体类——User
+     (2) jsp页面——登录页面login.jsp
+     (3) 登录控制器loginaction.do.do?opt=login----LoginController
+
+
+
+
+
+
+
+
+
+
+
+
